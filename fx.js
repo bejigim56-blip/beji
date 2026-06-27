@@ -106,12 +106,20 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
 
   function revealPage() {
     if (!loaderOn) return;
-    var wait = Math.max(0, 450 - (Date.now() - shownAt));   /* 너무 빨리 깜빡이지 않게 최소 표시 */
-    setTimeout(function () {
-      var w = document.querySelector('.wrap, .container, main');
+    var startWait = Date.now();
+    function doReveal() {
+      var w = document.querySelector('.wrap, .container, main, .sheet');
       if (w) { w.classList.remove('fx-enter'); void w.offsetWidth; w.classList.add('fx-enter'); }
       if (fxLoadEl) fxLoadEl.classList.add('fx-hide');
-    }, wait);
+    }
+    function waitReady() {
+      var minShown = Date.now() - shownAt >= 450;          /* 최소 표시시간 */
+      var dataReady = document.body && document.body.classList.contains('ready');
+      var timedOut = Date.now() - startWait >= 2200;        /* 폴백: 데이터 안 와도 2.2초 후 표시 */
+      if ((minShown && dataReady) || timedOut) { doReveal(); return; }
+      setTimeout(waitReady, 60);
+    }
+    waitReady();
   }
 
   if (loaderOn) {

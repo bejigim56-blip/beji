@@ -247,10 +247,11 @@ body.dark .ed-footer{border-color:var(--text-soft)}
         </div>
         <div class="sec-title" style="margin-top:22px">TMI</div>
         <div class="info-list">
-          <div class="info-row"><span class="ik">모티프</span><span class="iv">별 ★ · 원숭이 🐒</span></div>
-          <div class="info-row"><span class="ik">시그아이템</span><span class="iv">번개모양 머리핀 ⚡</span></div>
-          <div class="info-row"><span class="ik">즐겨하는 게임</span><span class="iv">스팀 종겜</span></div>
-          <div class="info-row"><span class="ik">음악 취향</span><span class="iv">힙합</span></div>
+          <div class="info-row"><span class="ik">모티프</span><span class="iv" id="p-tmi-motif">별 ★ · 원숭이 🐒</span></div>
+          <div class="info-row"><span class="ik">시그아이템</span><span class="iv" id="p-tmi-item">번개모양 머리핀 ⚡</span></div>
+          <div class="info-row"><span class="ik">즐겨하는 게임</span><span class="iv" id="p-tmi-game">스팀 종겜</span></div>
+          <div class="info-row"><span class="ik">음악 취향</span><span class="iv" id="p-tmi-music">힙합</span></div>
+          <div class="info-row"><span class="ik">애창곡</span><span class="iv" id="p-tmi-song">둥지 — 남진 🎵</span></div>
         </div>
       </div>
     </div>
@@ -266,19 +267,19 @@ body.dark .ed-footer{border-color:var(--text-soft)}
         </div>
         <div class="sec-title" style="margin-top:22px">어록</div>
         <div class="quote-list">
-          <div class="quote-item">베~ <div class="qs">베지의 인사말</div></div>
-          <div class="quote-item">안농? 나는 너의 마음속에 사는 베지라구해🐒🩵<div class="qs">자기소개</div></div>
+          <div class="quote-item" id="p-quote1">베~ <div class="qs" id="p-quote1sub">베지의 인사말</div></div>
+          <div class="quote-item" id="p-quote2">안농? 나는 너의 마음속에 사는 베지라구해🐒🩵<div class="qs" id="p-quote2sub">자기소개</div></div>
         </div>
       </div>
       <div>
         <div class="sec-title">Stats</div>
         <div class="stat-grid">
-          <div class="stat-item"><div class="stat-label"><span>텐션 ⚡</span><span>90</span></div><div class="stat-bar"><div class="stat-fill" style="width:90%"></div></div></div>
-          <div class="stat-item"><div class="stat-label"><span>소통력 💬</span><span>95</span></div><div class="stat-bar"><div class="stat-fill" style="width:95%"></div></div></div>
-          <div class="stat-item"><div class="stat-label"><span>먹성 🍽</span><span>80</span></div><div class="stat-bar"><div class="stat-fill" style="width:80%"></div></div></div>
-          <div class="stat-item"><div class="stat-label"><span>게임 🎮</span><span>70</span></div><div class="stat-bar"><div class="stat-fill" style="width:70%"></div></div></div>
-          <div class="stat-item"><div class="stat-label"><span>노래 🎵</span><span>60</span></div><div class="stat-bar"><div class="stat-fill" style="width:60%"></div></div></div>
-          <div class="stat-item"><div class="stat-label"><span>털털함 😎</span><span>88</span></div><div class="stat-bar"><div class="stat-fill" style="width:88%"></div></div></div>
+          <div class="stat-item"><div class="stat-label"><span>텐션 ⚡</span><span id="p-stat1n">90</span></div><div class="stat-bar"><div class="stat-fill" id="p-stat1" style="width:90%"></div></div></div>
+          <div class="stat-item"><div class="stat-label"><span>소통력 💬</span><span id="p-stat2n">95</span></div><div class="stat-bar"><div class="stat-fill" id="p-stat2" style="width:95%"></div></div></div>
+          <div class="stat-item"><div class="stat-label"><span>먹성 🍽</span><span id="p-stat3n">80</span></div><div class="stat-bar"><div class="stat-fill" id="p-stat3" style="width:80%"></div></div></div>
+          <div class="stat-item"><div class="stat-label"><span>게임 🎮</span><span id="p-stat4n">70</span></div><div class="stat-bar"><div class="stat-fill" id="p-stat4" style="width:70%"></div></div></div>
+          <div class="stat-item"><div class="stat-label"><span>노래 🎵</span><span id="p-stat5n">60</span></div><div class="stat-bar"><div class="stat-fill" id="p-stat5" style="width:60%"></div></div></div>
+          <div class="stat-item"><div class="stat-label"><span>털털함 😎</span><span id="p-stat6n">88</span></div><div class="stat-bar"><div class="stat-fill" id="p-stat6" style="width:88%"></div></div></div>
         </div>
       </div>
     </div>
@@ -302,14 +303,14 @@ body.dark .ed-footer{border-color:var(--text-soft)}
       <div class="sec-title">Goals</div>
       <div class="goal-wrap">
         <div class="goal-item">
-          <div class="g-label"><span>SOOP 팔로워</span><span>진행중 🔥</span></div>
-          <div class="g-bar"><div class="g-fill" style="width:60%"></div></div>
-          <div class="g-sub">다음 목표를 향해 달리는 중!</div>
+          <div class="g-label"><span id="p-goal1">SOOP 팔로워</span><span>진행중 🔥</span></div>
+          <div class="g-bar"><div class="g-fill" id="p-goal1bar" style="width:60%"></div></div>
+          <div class="g-sub" id="p-goal1sub">다음 목표를 향해 달리는 중!</div>
         </div>
         <div class="goal-item">
-          <div class="g-label"><span>유튜브 구독자</span><span>진행중 ⚡</span></div>
-          <div class="g-bar"><div class="g-fill" style="width:35%"></div></div>
-          <div class="g-sub">베지터들과 함께 쭉쭉 올라가요!</div>
+          <div class="g-label"><span id="p-goal2">유튜브 구독자</span><span>진행중 ⚡</span></div>
+          <div class="g-bar"><div class="g-fill" id="p-goal2bar" style="width:35%"></div></div>
+          <div class="g-sub" id="p-goal2sub">베지터들과 함께 쭉쭉 올라가요!</div>
         </div>
       </div>
     </div>
@@ -361,6 +362,7 @@ body.dark .ed-footer{border-color:var(--text-soft)}
 <script>
 var defaults={'soop-id':'angel000429',avatar:'https://stimg.sooplive.com/NORMAL_BBS/6/12897866/294669cde8070863e.gif','info-name':'베지','info-catchphrase':'"안농? 나는 너의 마음속에 사는 베지라구해🐒🩵"','info-fandom':'베지터',days:'1,2,3,4,5,6',like1:'베지터(팬)',like2:'강아지',like3:'별풍선(돈)',like4:'',dislike1:'벌레',dislike2:'가지나물',dislike3:'갑툭튀'};
 
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 async function render(){
   var saved={};
   try{var r=await db.from('profile').select('data').eq('id',1);if(r.data&&r.data[0]&&r.data[0].data) saved=r.data[0].data;}catch(e){}
@@ -377,6 +379,31 @@ async function render(){
   st('info-content',d['info-content']);st('info-agency',d['info-agency']);
   ['like1','like2','like3','like4','dislike1','dislike2','dislike3'].forEach(function(id){var el=document.getElementById(id);if(el){var v=(d[id]||'').trim();el.textContent=v;el.style.display=v?'':'none';}});
   if(d['info-tags']){var te=document.getElementById('info-tags');if(te) te.innerHTML=d['info-tags'].split(',').filter(function(t){return t.trim()}).map(function(t){return '<span class="tg">'+t.trim()+'</span>'}).join('');}
+
+  // TMI
+  st('p-tmi-motif',d['tmi-motif']);st('p-tmi-item',d['tmi-item']);
+  st('p-tmi-game',d['tmi-game']);st('p-tmi-music',d['tmi-music']);st('p-tmi-song',d['tmi-song']);
+  // 어록
+  st('p-quote1',d.quote1);st('p-quote1sub',d.quote1sub);
+  st('p-quote2',d.quote2);st('p-quote2sub',d.quote2sub);
+  // 어록 설명이 본문에 합쳐지지 않도록 — quote1 텍스트만 교체 시 qs 살리기
+  if(d.quote1){var q1=document.getElementById('p-quote1');if(q1){q1.innerHTML=esc(d.quote1)+'<div class="qs" id="p-quote1sub">'+esc(d.quote1sub||'')+'</div>';}}
+  if(d.quote2){var q2=document.getElementById('p-quote2');if(q2){q2.innerHTML=esc(d.quote2)+'<div class="qs" id="p-quote2sub">'+esc(d.quote2sub||'')+'</div>';}}
+  // 능력치
+  [1,2,3,4,5,6].forEach(function(n){
+    var v=d['stat'+n];
+    if(v!=null&&v!==''){
+      var bar=document.getElementById('p-stat'+n);var num=document.getElementById('p-stat'+n+'n');
+      var pct=Math.max(0,Math.min(100,parseInt(v)||0));
+      if(bar) bar.style.width=pct+'%';
+      if(num) num.textContent=pct;
+    }
+  });
+  // 목표
+  st('p-goal1',d.goal1);st('p-goal1sub',d.goal1sub);
+  st('p-goal2',d.goal2);st('p-goal2sub',d.goal2sub);
+  if(d.goal1pct!=null&&d.goal1pct!==''){var g1=document.getElementById('p-goal1bar');if(g1) g1.style.width=Math.max(0,Math.min(100,parseInt(d.goal1pct)||0))+'%';}
+  if(d.goal2pct!=null&&d.goal2pct!==''){var g2=document.getElementById('p-goal2bar');if(g2) g2.style.width=Math.max(0,Math.min(100,parseInt(d.goal2pct)||0))+'%';}
   var ac=(d.days||'1,2,3,4,5,6').split(',').map(function(x){return x.trim()});
   var lb=['일','월','화','수','목','금','토'];
   for(var i=0;i<=6;i++){var ch=document.getElementById('day-'+i);if(!ch) continue;var on=ac.indexOf(String(i))>=0;ch.className='sd'+(on?' on':'');ch.innerHTML=lb[i]+'<small>'+(on?'6PM':'OFF')+'</small>';}
