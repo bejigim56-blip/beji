@@ -52,8 +52,8 @@ body.dark .masthead{border-color:var(--text-soft)}
 .mh-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px}
 .mh-title{font-family:'Playfair Display',serif;font-size:clamp(52px,7vw,80px);font-weight:900;letter-spacing:6px;color:var(--logo);line-height:1;margin-bottom:4px}
 .mh-sub{font-size:12px;color:var(--text-soft);font-weight:500;letter-spacing:2px;padding-bottom:18px}
-.ed-nav{display:flex;gap:0;justify-content:center;margin-top:-12px;padding-bottom:14px}
-.ed-nav a{font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;padding:0 12px;letter-spacing:2px;text-transform:uppercase;transition:.15s}
+.ed-nav{display:flex;gap:0;text-align:left;margin-top:-12px;padding-bottom:14px}
+.ed-nav a{font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;padding:0 18px 0 0;letter-spacing:2px;text-transform:uppercase;transition:.15s}
 .ed-nav a:hover{color:var(--main-dark)}
 .ed-nav a.active{color:var(--main-dark);font-weight:700}
 
@@ -412,7 +412,7 @@ if(window.parent!==window&&typeof initIframeResize==='function'){window.addEvent
 <script>
 (function(){if(localStorage.getItem('theme')==='dark') document.body.classList.add('dark');var sw=document.getElementById('themeSwitch'),k=document.getElementById('themeKnob');function r(){if(k) k.textContent=document.body.classList.contains('dark')?'☀️':'🌙'}if(sw) sw.addEventListener('click',function(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');r()});r()})();
 </script>
-<script>var FX_FLOAT=['⚡','✦','⚡','✧','⚡'];var FX_CLICK='⚡';var FX_COUNT=12;var FX_TILT=true;var FX_LOADER=true;var FX_LOADER_TEXT='VEGGIE';var FX_TRANS_MS=800;</script>
+<script>var FX_FLOAT=['⚡','✦','⚡','✧','⚡'];var FX_CLICK='⚡';var FX_COUNT=12;var FX_TILT=true;var FX_LOADER=true;var FX_LOADER_TEXT='⚡';var FX_TRANS_MS=800;</script>
 <script src="../fx.js"></script>
 <script>
 if(typeof fxDday==='function'){var _n=fxDday('04-29');var _dd=document.getElementById('dday');if(_dd&&_n!==null){_dd.textContent='🎂 '+(_n===0?'생일!':'D-'+_n);_dd.style.display='';}}

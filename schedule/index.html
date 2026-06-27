@@ -1,120 +1,196 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>베지 · 방송 일정</title>
-  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/an/angel000429/angel000429.jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
-  <style>
-    .calendar { background:#fff; border-radius:20px; border:1.5px solid var(--main-light); box-shadow:var(--shadow); overflow:hidden; }
-    .cal-header { display:flex; align-items:center; justify-content:space-between; padding:18px 22px; }
-    .cal-title { font-size:20px; font-weight:800; color:var(--text); }
-    .cal-nav { width:38px; height:38px; border-radius:50%; border:1.5px solid var(--main-light); background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--text-mid); transition:all .2s; }
-    .cal-nav:hover { background:var(--main-light); }
-    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); }
-    .cal-dow { padding:10px 4px; text-align:center; font-size:13px; font-weight:700; color:var(--main); }
-    .cal-dow:first-child { color:#e05; } .cal-dow:last-child { color:#4a9; }
-    .cal-cell { height:88px; border-top:1px solid var(--main-light); border-right:1px solid var(--main-light); padding:5px 5px 6px; position:relative; overflow:hidden; cursor:default; }
-    .cal-cell:nth-child(7n) { border-right:none; }
-    .cal-cell.other { opacity:.35; }
-    .cal-cell.has { cursor:pointer; }
-    .cal-cell.has:hover { background:var(--main-light); }
-    .cal-cell.today { background:var(--main-light); }
-    .cal-cell.today .cal-date { background:var(--main); color:#fff; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; }
-    .cal-cell.hl { box-shadow:inset 0 0 0 2px var(--main); border-radius:8px; }
-    .cal-date { font-size:13px; font-weight:700; color:var(--text-mid); padding:1px 3px; }
-    .cal-cell:nth-child(7n+1) .cal-date { color:#e05; }
-    .cal-cell:nth-child(7n) .cal-date { color:#4a9; }
-    .ev { font-size:10px; padding:3px 6px; border-radius:6px; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; max-width:100%; }
-    /* 색상 팔레트 */
-    .c-green  { background:#d6f0e4; color:#1f7a52; }
-    .c-pink   { background:#ffe0eb; color:#d95f7f; }
-    .c-yellow { background:#fff0cc; color:#b07d18; }
-    .c-orange { background:#ffe0cc; color:#c2611f; }
-    .c-blue   { background:#d6e8fa; color:#2c6fb0; }
-    .c-purple { background:#e8ddf7; color:#7a4fb0; }
-    .c-red    { background:#ffd9d9; color:#c44; }
-    .c-gray   { background:#ececed; color:#666; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>베지 — 일정</title>
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/an/angel000429/angel000429.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --main:#00D8FF; --main-dark:#00A8CC; --main-deep:#006B80;
+  --main-light:#C8F5FF; --main-pale:#E8FBFF;
+  --bg:#D4F4FA; --card:#FFFFFF; --logo:#006B80;
+  --text:#1a2e35; --text-soft:#6b8fa0; --accent:#0100FF;
+}
+body.dark {
+  --main:#00D8FF; --main-dark:#5de8ff; --main-deep:#8ef3ff;
+  --main-light:#0d2b35; --main-pale:#0a1f28;
+  --bg:#0b1e26; --card:#0f2530; --logo:#5de8ff;
+  --text:#d8f5fc; --text-soft:#5a9bb0; --accent:#7b7bff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;transition:background .25s,color .25s;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-    .up-item { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; background:#fff; border:1px solid var(--main-light); margin-bottom:9px; border-left:5px solid var(--main); cursor:pointer; }
-    .up-date { flex-shrink:0; width:84px; }
-    .up-d1 { font-size:13px; font-weight:800; color:var(--text); }
-    .up-info { flex:1; }
-    .up-title { font-size:15px; font-weight:700; color:var(--text); }
-    .up-time { font-size:12px; color:var(--text-soft); margin-top:2px; }
-    .up-badge { padding:5px 14px; border-radius:999px; font-size:12px; font-weight:700; flex-shrink:0; }
+/* 다크 토글 */
+.ed-dark{position:fixed;top:18px;right:18px;z-index:800;width:22px;height:33px;border-radius:999px;border:1.5px solid var(--main-light);background:#e8f8fc;cursor:pointer;padding:0}
+.ed-dark .knob{position:absolute;left:1.5px;top:1.5px;width:16px;height:16px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:.2s}
+body.dark .ed-dark{background:#0d2230}
+body.dark .ed-dark .knob{top:14px;background:#0b1e26}
 
-    /* 모달 */
-    .ov { position:absolute; left:0; right:0; background:rgba(22,26,32,0.35); display:none; align-items:flex-start; justify-content:center; z-index:500; padding:16px; }
-    .ov.show { display:flex; }
-    .modal { background:#fff; border-radius:22px; width:100%; max-width:380px; padding:22px; box-shadow:0 20px 60px rgba(80,93,107,0.3); animation:pop .2s ease; }
-    @keyframes pop { from{transform:scale(.95);opacity:0} to{transform:scale(1);opacity:1} }
-    .m-date { font-size:14px; color:var(--text-soft); margin-bottom:6px; }
-    .m-badge { display:inline-block; padding:4px 12px; border-radius:999px; font-size:12px; font-weight:700; margin-bottom:14px; }
-    .m-part { background:var(--main-light); border:1px solid var(--main-light); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
-    .m-part .pt { font-size:12px; font-weight:700; color:var(--main-dark); }
-    .m-part .pn { font-size:15px; font-weight:600; color:var(--text); margin-top:2px; }
-    .m-desc { font-size:13px; color:var(--text-mid); background:var(--main-light); border-radius:12px; padding:11px 14px; margin-bottom:8px; white-space:pre-wrap; }
-    .m-close { width:100%; padding:12px; border-radius:12px; border:none; background:var(--main-light); color:var(--main-dark); font-size:14px; font-weight:700; cursor:pointer; margin-top:6px; }
+/* fx 폴백 */
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#fx .fxfb{position:absolute;top:-26px;opacity:0;animation:fxFall linear infinite;font-size:18px}
+@keyframes fxFall{0%{transform:translateY(-26px) rotate(0);opacity:0}12%{opacity:.4}88%{opacity:.3}100%{transform:translateY(103vh) translateX(var(--drift,20px)) rotate(180deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){#fx{display:none}}
 
-    @media (max-width:560px){
-      .cal-header { padding:14px 14px; }
-      .cal-title { font-size:17px; }
-      .cal-nav { width:32px; height:32px; font-size:14px; }
-      .cal-dow { padding:7px 1px; font-size:11px; }
-      .cal-cell { height:64px; padding:3px 2px 4px; }
-      .cal-date { font-size:11px; padding:0 2px; }
-      .cal-cell.today .cal-date { width:18px; height:18px; }
-      .ev { font-size:8px; padding:2px 3px; border-radius:4px; margin-top:2px; }
-      .up-item { gap:10px; padding:11px 12px; }
-      .up-date { width:72px; } .up-d1 { font-size:12px; }
-      .up-title { font-size:14px; } .up-badge { padding:4px 11px; font-size:11px; }
-    }
-    body.dark .calendar { background: var(--card); }
-    body.dark .cal-nav { background: var(--card); color: var(--text); }
-    body.dark .cal-cell.has:hover,
-    body.dark .cal-cell.today { background: #22262e; }
-    body.dark .up-item { background: var(--card); }
-    body.dark .modal { background: var(--card); }
-    body.dark .m-part,
-    body.dark .m-desc { background: #22262e; }
-  </style>
+/* ─── 에디토리얼 시트 ─── */
+.editorial{padding:24px clamp(12px,5vw,56px) 48px;position:relative;z-index:1}
+.sheet{max-width:1060px;margin:0 auto;background:var(--card);border-radius:30px;box-shadow:0 24px 80px rgba(0,180,220,.14);opacity:0;transition:opacity .35s}
+body.ready .sheet{opacity:1}
+
+/* 마스트헤드 */
+.masthead{text-align:center;padding:32px 28px 0;border-bottom:2px solid var(--text)}
+body.dark .masthead{border-color:var(--text-soft)}
+.mh-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px}
+.mh-title{font-family:'Playfair Display',serif;font-size:clamp(52px,7vw,80px);font-weight:900;letter-spacing:6px;color:var(--logo);line-height:1;margin-bottom:4px}
+.mh-sub{font-size:12px;color:var(--text-soft);font-weight:500;letter-spacing:2px;padding-bottom:18px}
+.ed-nav{display:flex;gap:0;text-align:left;margin-top:-12px;padding-bottom:14px;flex-wrap:wrap}
+.ed-nav a{font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;padding:0 18px 0 0;letter-spacing:2px;text-transform:uppercase;transition:.15s}
+.ed-nav a:hover{color:var(--main-dark)}
+.ed-nav a.active{color:var(--main-dark);font-weight:700}
+
+.ed-content{padding:28px clamp(16px,3vw,36px) 0}
+.sec-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;letter-spacing:1px;color:var(--logo);border-bottom:1px solid var(--main);padding-bottom:10px;margin-bottom:20px}
+
+/* ─── 달력 ─── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text)}
+.cal-nav{width:36px;height:36px;border-radius:50%;border:1px solid var(--main-light);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--main-dark);transition:.18s}
+.cal-nav:hover{background:var(--main-pale);border-color:var(--main)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--main-light);border-radius:12px;overflow:hidden}
+.cal-dow{padding:11px 4px;text-align:center;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--main-dark);background:var(--main-pale)}
+.cal-dow:first-child{color:#e26a8d}.cal-dow:last-child{color:#4aa}
+.cal-cell{min-height:92px;border-top:1px solid var(--main-light);border-right:1px solid var(--main-light);padding:6px;position:relative;overflow:hidden}
+.cal-cell:nth-child(7n){border-right:none}
+.cal-cell.other{opacity:.3}
+.cal-cell.has{cursor:pointer;transition:.15s}
+.cal-cell.has:hover{background:var(--main-pale)}
+.cal-cell.today{background:var(--main-pale)}
+.cal-cell.today .cal-date{background:var(--main);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center}
+.cal-cell.hl{box-shadow:inset 0 0 0 2px var(--main)}
+.cal-date{font-size:13px;font-weight:700;color:var(--text-soft);padding:1px 3px}
+.cal-cell:nth-child(7n+1) .cal-date{color:#e26a8d}
+.cal-cell:nth-child(7n) .cal-date{color:#4aa}
+.ev{font-size:10px;padding:3px 6px;border-radius:6px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.ev.c-green{background:var(--main-pale);color:var(--main-deep)}
+.ev.c-pink{background:#fde8ef;color:#c44d72}
+.ev.c-blue{background:#e3f0ff;color:#3a6ea5}
+.ev.c-purple{background:#efe8fd;color:#7a5ac4}
+.ev.c-yellow{background:#fff6e0;color:#b8860b}
+.ev.c-orange{background:#ffeede;color:#cc6a2a}
+body.dark .ev.c-pink{background:#3a1f28;color:#f0a8c0}
+body.dark .ev.c-blue{background:#1a2b3a;color:#8ec0f0}
+body.dark .ev.c-purple{background:#2a1f3a;color:#c0a8f0}
+body.dark .ev.c-yellow{background:#3a3320;color:#f0d080}
+body.dark .ev.c-orange{background:#3a2820;color:#f0b080}
+
+/* 다가오는 일정 */
+.upcoming-card{margin-top:32px}
+.up-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--main-light);border-left:3px solid var(--main);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.15s}
+.up-item:hover{background:var(--main-pale);transform:translateX(2px)}
+.up-item.c-pink{border-left-color:#e26a8d}
+.up-item.c-blue{border-left-color:#3a6ea5}
+.up-item.c-purple{border-left-color:#7a5ac4}
+.up-item.c-yellow{border-left-color:#b8860b}
+.up-item.c-orange{border-left-color:#cc6a2a}
+.up-date .up-d1{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap}
+.up-info{flex:1}
+.up-title{font-size:14px;font-weight:700;color:var(--text)}
+.up-time{font-size:12px;color:var(--text-soft);margin-top:2px}
+.up-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--main-pale);color:var(--main-deep);white-space:nowrap}
+.up-badge.c-pink{background:#fde8ef;color:#c44d72}
+.up-badge.c-blue{background:#e3f0ff;color:#3a6ea5}
+.up-badge.c-purple{background:#efe8fd;color:#7a5ac4}
+.up-badge.c-yellow{background:#fff6e0;color:#b8860b}
+.up-badge.c-orange{background:#ffeede;color:#cc6a2a}
+.empty{text-align:center;padding:40px 20px;color:var(--text-soft)}
+.empty-icon{font-size:36px;margin-bottom:10px}
+.spinner{width:32px;height:32px;border:3px solid var(--main-light);border-top-color:var(--main);border-radius:50%;animation:spin .8s linear infinite;margin:30px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 푸터 */
+.ed-footer{border-top:2px solid var(--text);display:flex;justify-content:space-between;align-items:center;padding:16px 28px;font-size:11px;color:var(--text-soft);margin-top:28px}
+body.dark .ed-footer{border-color:var(--text-soft)}
+
+/* 모달 */
+.ov{position:absolute;left:50%;transform:translateX(-50%);display:none;z-index:600;width:90%;max-width:380px}
+.ov.show{display:block}
+.modal{background:var(--card);border-radius:18px;padding:24px;box-shadow:0 20px 60px rgba(0,180,220,.3);border:1px solid var(--main-light)}
+.m-date{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--logo);margin-bottom:14px}
+.m-badge{display:inline-block;font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--main-pale);color:var(--main-deep);margin-bottom:10px}
+.m-badge.c-pink{background:#fde8ef;color:#c44d72}
+.m-part{display:flex;gap:12px;padding:10px 14px;background:var(--main-pale);border-radius:10px;margin-bottom:8px}
+body.dark .m-part{background:#132830}
+.m-part .pt{font-size:13px;font-weight:700;color:var(--main-dark);min-width:54px}
+.m-part .pn{font-size:13px;color:var(--text);font-weight:600}
+.m-desc{font-size:13px;color:var(--text-soft);line-height:1.6;padding:10px 14px;background:var(--main-pale);border-radius:10px;margin-bottom:8px}
+body.dark .m-desc{background:#132830}
+.m-close{width:100%;padding:11px;border:none;border-radius:10px;background:var(--main);color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.m-close:hover{background:var(--main-dark)}
+
+@media(max-width:760px){
+  .ed-footer{flex-direction:column;gap:4px;text-align:center}
+  .cal-cell{min-height:70px;padding:4px}
+  .ev{font-size:9px;padding:2px 4px}
+  .ed-nav{flex-wrap:wrap}
+}
+@media(max-width:480px){
+  .mh-top{flex-direction:column;gap:2px}
+  .cal-date{font-size:11px}
+}
+</style>
 </head>
 <body>
-<nav class="nav"><div class="nav-inner">
-  <a href="../index.html" class="nav-logo">⚡ veggie</a>
-  <a href="../index.html">메인</a>
-  <a href="../profile/">프로필</a>
-  <a href="index.html" class="active">일정</a>
-  <a href="../dress/">옷장</a>
-  <a href="../work/">업보</a>
-  <a href="../song/">노래책</a>
-  <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드 전환"><span class="knob" id="themeKnob">🌙</span></button>
-</div></nav>
 
-<div class="container stagger">
-  <div class="page-title">📅 방송 일정</div>
-  <div class="calendar">
+<button class="ed-dark" id="themeSwitch" type="button"><span class="knob" id="themeKnob">🌙</span></button>
+<div id="fx"></div>
+
+<div class="editorial">
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="mh-top"><span>Issue 01 · 2024</span><span>SOOP Live</span><span>angel000429</span></div>
+    <div class="mh-title">VEGGIE</div>
+    <div class="mh-sub">⚡ 안농? 나는 너의 마음속에 사는 베지라구해 ⚡</div>
+    <div class="ed-nav">
+      <a href="../index.html">메인</a>
+      <a href="../profile/">프로필</a>
+      <a href="index.html" class="active">일정</a>
+      <a href="../dress/">옷장</a>
+      <a href="../work/">업보</a>
+      <a href="../song/">노래책</a>
+    </div>
+  </div>
+
+  <div class="ed-content">
+
+    <div class="sec-title">Schedule</div>
     <div class="cal-header">
       <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
       <span class="cal-title" id="calTitle"></span>
       <button class="cal-nav" onclick="changeMonth(1)">›</button>
     </div>
     <div class="cal-grid" id="calGrid"></div>
+
+    <div class="upcoming-card">
+      <div class="sec-title">Upcoming</div>
+      <div id="upcoming"><div class="spinner"></div></div>
+    </div>
+
   </div>
-  <div class="card">
-    <div class="card-title">📋 다가오는 일정</div>
-    <div id="upcoming"><div class="spinner"></div></div>
+
+  <div class="ed-footer">
+    <span>© 2026 베지 Official.</span>
+    <span>비즈니스 문의 — 문의 버튼을 이용해 주세요</span>
   </div>
+
+</div>
 </div>
 
 <div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
   <div class="modal" id="modal-body"></div>
 </div>
-
-<footer>© 2026 베지 Official.<br>비즈니스 문의 — 문의 버튼을 이용해 주세요</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="../supabase.js"></script>
@@ -127,15 +203,17 @@
 
   async function init() {
     const now = new Date(); currentYear = now.getFullYear(); currentMonth = now.getMonth();
-    allSchedule = await fetchAll('schedule', { order: 'date', asc: true });
+    try { allSchedule = await fetchAll('schedule', { order: 'date', asc: true }); } catch(e) { allSchedule = []; }
     renderCalendar(); renderUpcoming();
-    enableIframeAutoHeight();
+    document.body.classList.add('ready');
+    if (typeof enableIframeAutoHeight === 'function') enableIframeAutoHeight();
   }
   function changeMonth(d) {
     currentMonth += d;
     if (currentMonth > 11) { currentMonth = 0; currentYear++; }
     if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-    renderCalendar(); enableIframeAutoHeight();
+    renderCalendar();
+    if (typeof enableIframeAutoHeight === 'function') enableIframeAutoHeight();
   }
   function renderCalendar() {
     document.getElementById('calTitle').textContent = `${currentYear}년 ${currentMonth+1}월`;
@@ -174,7 +252,7 @@
       const dd = new Date(s.date + 'T00:00:00'); const k = kind(s.type);
       const label = k==='off' ? '휴방' : '방송';
       const times = [s.time, s.time2].filter(Boolean).join(' · ');
-      return `<div class="up-item ${colorClass(s)}" style="border-left-color:currentColor" onclick="openModal('${s.date}')">
+      return `<div class="up-item ${colorClass(s)}" onclick="openModal('${s.date}')">
         <div class="up-date"><div class="up-d1">${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')} (${DAYS[dd.getDay()]})</div></div>
         <div class="up-info"><div class="up-title">${esc(s.title || label)}</div>${times?`<div class="up-time">${esc(times)}</div>`:''}</div>
         <span class="up-badge ${colorClass(s)}">${label}</span>
@@ -189,9 +267,7 @@
     events.forEach(s => {
       const k = kind(s.type);
       html += `<div class="m-badge ${colorClass(s)}">${k==='off'?'휴방':'방송'}</div>`;
-      // 1부
       html += `<div class="m-part"><div class="pt">${s.time?esc(s.time):'1부'}</div><div class="pn">${esc(s.title || (k==='off'?'휴방':'방송'))}</div></div>`;
-      // 2부
       if (s.title2 || s.time2) {
         html += `<div class="m-part"><div class="pt">${s.time2?esc(s.time2):'2부'}</div><div class="pn">${esc(s.title2||'방송')}</div></div>`;
       }
@@ -204,18 +280,16 @@
     let y = 200;
     if (e) { y = (e.pageY != null ? e.pageY : (e.clientY||0)); }
     ov.style.top = Math.max(10, y - 80) + 'px';
-    ov.style.height = 'auto';
-    ov.style.minHeight = '0';
     ov.classList.add('show');
   }
   function closeModal(){ document.getElementById('ov').classList.remove('show'); }
   init();
+  setTimeout(function(){document.body.classList.add('ready')},1200);
 </script>
 <script>
 (function(){
   if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
-  var sw = document.getElementById('themeSwitch');
-  var knob = document.getElementById('themeKnob');
+  var sw = document.getElementById('themeSwitch'), knob = document.getElementById('themeKnob');
   function refresh(){ if(knob) knob.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙'; }
   if (sw) sw.addEventListener('click', function(){
     document.body.classList.toggle('dark');
@@ -225,7 +299,7 @@
   refresh();
 })();
 </script>
-<!-- 공통 연출(입자·클릭·기울기) -->
+<script>var FX_FLOAT=['⚡','✦','⚡','✧','⚡'];var FX_CLICK='⚡';var FX_COUNT=12;var FX_TILT=true;var FX_LOADER=true;var FX_LOADER_TEXT='⚡';var FX_TRANS_MS=800;</script>
 <script src="../fx.js"></script>
 </body>
 </html>

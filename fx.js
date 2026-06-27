@@ -93,11 +93,12 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
     }
     var logoTxt = ((document.querySelector('.nav-logo') || {}).textContent || document.title || '').trim();
     if (FX_LOADER_IMG)            av.style.backgroundImage = 'url("' + FX_LOADER_IMG + '")';
+    else if (FX_LOADER_TEXT)      av.textContent = FX_LOADER_TEXT;
     else if (ch && ch !== 'none') av.style.backgroundImage = ch;          /* --char = url("data:...") */
     else if (img)                av.style.backgroundImage = 'url("' + img + '")';
-    else                         av.textContent = (FX_LOADER_TEXT || logoTxt || '✿').charAt(0) || '✿';
+    else                         av.textContent = (logoTxt || '✿').charAt(0) || '✿';
     var nm = document.createElement('div'); nm.className = 'fxload-name';
-    nm.textContent = (FX_LOADER_TEXT || logoTxt || '');
+    nm.textContent = '';
     var dt = document.createElement('div'); dt.className = 'fxload-dots'; dt.innerHTML = '<i></i><i></i><i></i>';
     el.appendChild(av); if (nm.textContent) el.appendChild(nm); el.appendChild(dt);
     document.body.appendChild(el); fxLoadEl = el; shownAt = Date.now();

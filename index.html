@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>베지 — 메인 시안</title>
+<title>베지</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800;900&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 /* ─── 공통 변수 ─── */
@@ -435,6 +435,10 @@ body.dark .poster .pst-card.bg-white { background:#0f2530; }
 .editorial .ed-nav a{font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;padding:0 18px 0 0;letter-spacing:2px;text-transform:uppercase;transition:.15s;}
 .editorial .ed-nav a:hover{color:var(--main-dark);}
 .editorial .ed-nav a.active{color:var(--main-dark);font-weight:700;}
+
+.dark-toggle{transition:.2s}
+body.dark .dark-toggle{background:#0d2230 !important}
+body.dark .dark-toggle .knob{top:14px !important;background:#0b1e26 !important}
 </style>
 </head>
 <body>
@@ -442,16 +446,10 @@ body.dark .poster .pst-card.bg-white { background:#0f2530; }
 <!-- fx 인라인 폴백 (미리보기용) -->
 <div id="fx"></div>
 
-<!-- ─── 탭 바 ─── -->
-<div class="tab-bar" style="display:none">
-  <span class="label">메인 시안</span>
-  <button class="tab-btn active" onclick="showTab('a')">A. 커버스토리</button>
-  <button class="tab-btn" onclick="showTab('b')">B. 에디토리얼</button>
-  <button class="tab-btn" onclick="showTab('c')">C. 포스터진</button>
-  <button class="dark-toggle" id="themeSwitch" type="button">
-    <span class="knob" id="themeKnob">🌙</span>
-  </button>
-</div>
+<!-- 다크모드 토글 (우상단 고정) -->
+<button class="dark-toggle" id="themeSwitch" type="button" style="position:fixed;top:18px;right:18px;z-index:800;width:22px;height:33px;border-radius:999px;border:1.5px solid var(--main-light);background:#e8f8fc;cursor:pointer;padding:0;">
+  <span class="knob" id="themeKnob" style="position:absolute;left:1.5px;top:1.5px;width:16px;height:16px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;box-shadow:0 1px 4px rgba(0,0,0,.2);">🌙</span>
+</button>
 
 
 <!-- ════════════════════════════════════════════════════════════
@@ -805,7 +803,7 @@ var FX_CLICK='⚡';
 var FX_COUNT=12;
 var FX_TILT=true;
 var FX_LOADER=true;
-var FX_LOADER_TEXT='VEGGIE';
+var FX_LOADER_TEXT='⚡';
 var FX_TRANS_MS=800;
 </script>
 <script src="fx.js"></script>
